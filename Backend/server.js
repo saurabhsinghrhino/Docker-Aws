@@ -4,10 +4,21 @@ import { Server } from "socket.io";
 import { YSocketIO } from "y-socket.io/dist/server";
 
 const app = express();
+app.use(express.static("Public"));
+
 const httpServer = createServer(app);
 
-app.get("/", (req, res) => {
-  res.status(200).json({ message: "Hello World!", success: true });
+const io = new Server(httpServer, {
+  cors: {
+    origin: "*",
+    methods: ["GET", "POST"],
+  },
+});
+
+const ySocketIO = new YSocketIO(io);
+
+app.get("/health", (req, res) => {
+  res.status(200).json({ message: "Health check passed!", success: true });
 });
 
 httpServer.listen(3000, () => {
