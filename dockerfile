@@ -23,4 +23,4 @@ RUN npm install
 
 COPY --from=frontend-builder /app/dist /app/public
 
-CMD ["node", "server.js"]
+CMD ["node", "server.js"];
